@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>Ticket Tracker Application</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+	crossorigin="anonymous">
+</head>
+<body>
+	<nav class="navbar navbar-expand-md bg-primary navbar-dark">
+		<!-- Brand -->
+		<a class="navbar-brand" href="#">Ticket Tracker Application</a>
+
+		<!-- Toggler/collapsibe Button -->
+		<button class="navbar-toggler" type="button" data-toggle="collapse"
+			data-target="#collapsibleNavbar">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<!-- Navbar links -->
+		<div class="collapse navbar-collapse" id="collapsibleNavbar">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/tickets}">Tickets</a></li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/newTicket}">New Ticket</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="container">
+		<div class="row">
+			<h1>List Of Tickets</h1>
+		</div>
+		<br>
+		<form th:action="@{/tickets/search}">
+			<input type="text" name="keyword" id="keyword" size="15"
+				th:value="${keyword}" required />&nbsp; <input type="submit"
+				value="Search" />&nbsp;
+		</form>
+		<br>
+		<table class="table table-striped table-bordered">
+			<thead class="table-dark">
+				<tr>
+					<th>#</th>
+					<th>Ticket Title</th>
+					<th>Ticket Short Description</th>
+					<th>Ticket Created on</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+
+			<tbody>
+				<tr th:each="ticket: ${tickets}">
+					<td th:text="${ticket.id}"></td>
+					<td th:text="${ticket.title}"></td>
+					<td th:text="${ticket.description}"></td>
+					<td th:text="${ticket.createdOn}"></td>
+					<td><a th:href="@{/tickets/edit/{id}(id=${ticket.id})}"
+						class="btn btn-primary">Edit</a> <a
+						th:href="@{/tickets/{id}(id=${ticket.id})}" class="btn btn-danger">Delete</a>
+						<a th:href="@{/tickets/view/{id}(id=${ticket.id})}"
+						class="btn btn-primary">View</a></td>
+				</tr>
+			</tbody>
+
+		</table>
+
+	</div>
+</body>
+</html>
